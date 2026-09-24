@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureDocs | Usuarios</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+            </div>
+            <div class="sidebar-brand-text">
+                <strong>SecureDocs</strong>
+                <span>CLOUD SECURITY</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <div class="menu-title">PRINCIPAL</div>
+
+            <a href="./dashboard.html" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="./documentos.html" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6"/></svg>
+                <span>Documentos</span>
+            </a>
+
+            <div class="menu-title">ADMINISTRACIÓN</div>
+
+            <a href="./usuarios.html" id="menuUsuarios" class="sidebar-link active">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Usuarios</span>
+            </a>
+
+            <a href="./auditoria.html" id="menuAuditoria" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+                <span>Auditoría</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-user">
+                <div class="avatar" id="sidebarAvatar">--</div>
+                <div class="sidebar-user-info">
+                    <strong id="sidebarUserName">Usuario</strong>
+                    <span id="sidebarUserRole">Rol</span>
+                </div>
+            </div>
+            <button id="logoutButton" class="logout-button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+                Cerrar sesión
+            </button>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="page-title">
+                <h1>Gestión de usuarios</h1>
+                <p>Administración de usuarios y roles de SecureDocs</p>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-user">
+                    <div class="topbar-user-info">
+                        <strong id="topUserName">Usuario</strong>
+                        <span id="topUserDepartment">Departamento</span>
+                    </div>
+                    <div class="avatar" id="topAvatar">--</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content-area">
+
+            <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr) !important; margin-bottom: 22px;">
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <p>Usuarios registrados</p>
+                        <div class="stat-icon blue"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+                    </div>
+                    <h3 id="totalUsuarios">—</h3>
+                    <p>En el sistema</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+
+                <div class="content-card-header">
+                    <div>
+                        <h2>Usuarios del sistema</h2>
+                        <p>Usuarios registrados y sus niveles de acceso</p>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-ghost" onclick="cargarUsuarios()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+                            Actualizar
+                        </button>
+                        <button id="btnNuevoUsuario" class="btn btn-primary" style="display: none;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                            Nuevo usuario
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Usuario</th>
+                                <th>Rol</th>
+                                <th>Departamento</th>
+                                <th>Nivel</th>
+                                <th>País</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaUsuariosBody">
+                            <tr><td colspan="8"><div class="state-message">Cargando usuarios…</div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- MODAL: ver usuario -->
+<div class="modal-backdrop" id="viewUserModal">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h3>Detalle del usuario</h3>
+            <button type="button" class="modal-close" data-close="viewUserModal" aria-label="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="modal-body" id="viewUserBody"></div>
+        <div class="modal-foot">
+            <button type="button" class="btn btn-ghost" data-close="viewUserModal">Cerrar</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: nuevo usuario -->
+<div class="modal-backdrop" id="newUserModal">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h3>Nuevo usuario</h3>
+            <button type="button" class="modal-close" data-close="newUserModal" aria-label="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <form id="newUserForm">
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="newNombre">Nombre completo</label>
+                    <input type="text" id="newNombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="newEmail">Correo electrónico</label>
+                    <input type="email" id="newEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword">Contraseña</label>
+                    <input type="password" id="newPassword" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label for="newRol">Rol</label>
+                    <select id="newRol" required></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="newDepartamento">Departamento</label>
+                    <input type="text" id="newDepartamento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="newNivel">Nivel de seguridad</label>
+                    <select id="newNivel" required>
+                        <option value="1">Nivel 1</option>
+                        <option value="2">Nivel 2</option>
+                        <option value="3">Nivel 3</option>
+                        <option value="4">Nivel 4</option>
+                        <option value="5">Nivel 5</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="newPais">País</label>
+                    <input type="text" id="newPais" value="Peru" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="newTipoContrato">Tipo de contrato</label>
+                    <select id="newTipoContrato" required>
+                        <option value="INTERNO">INTERNO</option>
+                        <option value="EXTERNO">EXTERNO</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn btn-ghost" data-close="newUserModal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Crear usuario</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL: editar usuario -->
+<div class="modal-backdrop" id="editUserModal">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h3>Editar usuario</h3>
+            <button type="button" class="modal-close" data-close="editUserModal" aria-label="Cerrar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <form id="editUserForm">
+            <input type="hidden" id="editUserId">
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="editNombre">Nombre completo</label>
+                    <input type="text" id="editNombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editEmail">Correo electrónico</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editRol">Rol</label>
+                    <select id="editRol" required></select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDepartamento">Departamento</label>
+                    <input type="text" id="editDepartamento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editNivel">Nivel de seguridad</label>
+                    <select id="editNivel" required>
+                        <option value="1">Nivel 1</option>
+                        <option value="2">Nivel 2</option>
+                        <option value="3">Nivel 3</option>
+                        <option value="4">Nivel 4</option>
+                        <option value="5">Nivel 5</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editPais">País</label>
+                    <input type="text" id="editPais" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editTipoContrato">Tipo de contrato</label>
+                    <select id="editTipoContrato" required>
+                        <option value="INTERNO">INTERNO</option>
+                        <option value="EXTERNO">EXTERNO</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn btn-ghost" data-close="editUserModal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="./js/api.js"></script>
+<script src="./js/usuarios.js"></script>
+
+</body>
+</html>

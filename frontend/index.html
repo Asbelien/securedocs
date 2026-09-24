@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureDocs | Iniciar sesión</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="login-page">
+
+    <main class="login-wrapper">
+
+        <!-- LADO IZQUIERDO -->
+        <section class="login-info">
+
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+                </div>
+                <span>SecureDocs</span>
+            </div>
+
+            <div class="info-content">
+
+                <span class="security-badge">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+                    Plataforma empresarial segura
+                </span>
+
+                <h1>Protege tus documentos.<span>Controla quién los ve.</span></h1>
+
+                <p>SecureDocs combina control de acceso por roles (RBAC) y por atributos (ABAC) para decidir, en cada solicitud, si el acceso a un documento está permitido.</p>
+
+                <div class="security-features">
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                        </div>
+                        <div>
+                            <strong>Control de acceso</strong>
+                            <small>Evaluación en dos pasos: RBAC + ABAC</small>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6"/></svg>
+                        </div>
+                        <div>
+                            <strong>Documentos protegidos</strong>
+                            <small>Por departamento, nivel y país</small>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+                        </div>
+                        <div>
+                            <strong>Auditoría</strong>
+                            <small>Cada intento queda registrado</small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="login-info-footer">
+                <span>SECUREDOCS</span>
+                <span>GLAB-S06 · SEGURIDAD EN LA NUBE</span>
+            </div>
+
+        </section>
+
+        <!-- LADO DERECHO -->
+        <section class="login-form-section">
+
+            <div class="login-card">
+
+                <div class="mobile-logo">
+                    <div class="logo-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+                    </div>
+                    <span>SecureDocs</span>
+                </div>
+
+                <div class="login-header">
+                    <span class="welcome-label">BIENVENIDO DE NUEVO</span>
+                    <h2>Iniciar sesión</h2>
+                    <p>Ingresa tus credenciales para acceder a SecureDocs.</p>
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="form-field">
+                        <label for="email">Correo electrónico</label>
+                        <div class="input-container">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                            <input type="email" id="email" placeholder="usuario@securedocs.com" autocomplete="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="password">Contraseña</label>
+                        <div class="input-container">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                            <input type="password" id="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+                            <button type="button" id="togglePassword" class="password-button" aria-label="Mostrar contraseña">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="loginError" class="login-error d-none">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <span id="loginErrorText"></span>
+                    </div>
+
+                    <button type="submit" id="loginButton" class="login-button">
+                        <span>Iniciar sesión</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </button>
+
+                </form>
+
+                <div class="secure-message">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+                    <span>Tus credenciales viajan cifradas y cada acceso queda registrado en la auditoría.</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+
+</body>
+</html>

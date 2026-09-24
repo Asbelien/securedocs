@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureDocs | Dashboard</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+            <div class="sidebar-brand-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+            </div>
+            <div class="sidebar-brand-text">
+                <strong>SecureDocs</strong>
+                <span>CLOUD SECURITY</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <div class="menu-title">PRINCIPAL</div>
+
+            <a href="./dashboard.html" class="sidebar-link active">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="./documentos.html" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6"/></svg>
+                <span>Documentos</span>
+            </a>
+
+            <div class="menu-title" id="menuTitleAdmin">ADMINISTRACIÓN</div>
+
+            <a href="./usuarios.html" id="menuUsuarios" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Usuarios</span>
+            </a>
+
+            <a href="./auditoria.html" id="menuAuditoria" class="sidebar-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
+                <span>Auditoría</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-user">
+                <div class="avatar" id="sidebarAvatar">--</div>
+                <div class="sidebar-user-info">
+                    <strong id="sidebarUserName">Usuario</strong>
+                    <span id="sidebarUserRole">Rol</span>
+                </div>
+            </div>
+            <button id="logoutButton" class="logout-button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+                Cerrar sesión
+            </button>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+                <p>Resumen de seguridad y gestión documental</p>
+            </div>
+            <div class="topbar-right">
+                <div class="security-pill">
+                    <span class="security-dot"></span>
+                    <span>Sistema protegido</span>
+                </div>
+                <div class="topbar-user">
+                    <div class="topbar-user-info">
+                        <strong id="topUserName">Usuario</strong>
+                        <span id="topUserDepartment">Departamento</span>
+                    </div>
+                    <div class="avatar" id="topAvatar">--</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="content-area">
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <p>Documentos</p>
+                        <div class="stat-icon blue"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6"/></svg></div>
+                    </div>
+                    <h3 id="totalDocumentos">—</h3>
+                    <p>Visibles para tu rol</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <p>Seguridad</p>
+                        <div class="stat-icon green"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg></div>
+                    </div>
+                    <h3 id="nivelSeguridad">—</h3>
+                    <p>Nivel de seguridad</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <p>Rol</p>
+                        <div class="stat-icon blue"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+                    </div>
+                    <h3 id="rolUsuario" style="font-size: 18px;">—</h3>
+                    <p>Perfil de acceso</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <p>Estado</p>
+                        <div class="stat-icon green"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                    </div>
+                    <h3 id="estadoUsuario" style="font-size: 18px;">—</h3>
+                    <p>Estado de la cuenta</p>
+                </div>
+
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Documentos recientes</h2>
+                            <p>Filtrados por tu acceso RBAC + ABAC</p>
+                        </div>
+                        <a href="./documentos.html">Ver todos →</a>
+                    </div>
+                    <div class="panel-body" id="recentDocuments">
+                        <div class="state-message">Cargando documentos…</div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Mi sesión</h2>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="activity-item">
+                            <div class="activity-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+                            <div class="activity-info">
+                                <strong id="sessionName">Usuario</strong>
+                                <span>Nombre de usuario</span>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-6h6v6"/></svg></div>
+                            <div class="activity-info">
+                                <strong id="sessionDepartment">—</strong>
+                                <span>Departamento</span>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg></div>
+                            <div class="activity-info">
+                                <strong id="sessionRole">—</strong>
+                                <span>Rol asignado</span>
+                            </div>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="activity-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+                            <div class="activity-info">
+                                <strong>RBAC + ABAC</strong>
+                                <span>Modelo de autorización activo</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="./js/api.js"></script>
+<script src="./js/dashboard.js"></script>
+
+</body>
+</html>

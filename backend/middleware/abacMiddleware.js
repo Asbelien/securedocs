@@ -7,20 +7,11 @@ function requireDocumentAccess(accion = 'consultar') {
 
     try {
 
-      // =====================================================
-      // 1. VERIFICAR AUTENTICACIÓN
-      // =====================================================
-
       if (!req.user) {
         return res.status(401).json({
           error: 'Usuario no autenticado'
         });
       }
-
-
-      // =====================================================
-      // 2. VALIDAR ID DEL DOCUMENTO
-      // =====================================================
 
       const documentoId = parseInt(req.params.id);
 
@@ -29,11 +20,6 @@ function requireDocumentAccess(accion = 'consultar') {
           error: 'ID de documento inválido'
         });
       }
-
-
-      // =====================================================
-      // 3. OBTENER DOCUMENTO
-      // =====================================================
 
       const pool = await poolPromise;
 
@@ -54,22 +40,15 @@ function requireDocumentAccess(accion = 'consultar') {
 
       const documento = result.recordset[0];
 
-
       if (!documento) {
         return res.status(404).json({
           error: 'Documento no encontrado'
         });
       }
 
-
       const recurso = `Documento ${documento.id}`;
 
-
-      // =====================================================
-      // ABAC 1
-      // ESTADO DEL USUARIO
-      // =====================================================
-
+      // ABAC 1 — estado del usuario
       if (req.user.estado !== 'activo') {
 
         await registrarAuditoria({
@@ -88,16 +67,7 @@ function requireDocumentAccess(accion = 'consultar') {
         });
       }
 
-
-      // =====================================================
-      // ABAC 2
-      // POLÍTICA ESPECIAL PARA INVITADOS
-      //
-      // EXTERNO
-      // CONFIDENCIALIDAD <= 1
-      // DOCUMENTO PUBLICADO
-      // =====================================================
-
+      // ABAC 2 — política especial para invitados
       if (req.user.rol_nombre === 'Invitado') {
 
         if (req.user.tipo_contrato !== 'EXTERNO') {
@@ -118,7 +88,6 @@ function requireDocumentAccess(accion = 'consultar') {
           });
         }
 
-
         if (documento.nivel_confidencialidad > 1) {
 
           await registrarAuditoria({
@@ -137,7 +106,6 @@ function requireDocumentAccess(accion = 'consultar') {
             nivel_documento: documento.nivel_confidencialidad
           });
         }
-
 
         if (documento.estado !== 'PUBLICADO') {
 
@@ -158,7 +126,6 @@ function requireDocumentAccess(accion = 'consultar') {
           });
         }
 
-
         await registrarAuditoria({
           usuarioId: req.user.id,
           recurso,
@@ -170,23 +137,11 @@ function requireDocumentAccess(accion = 'consultar') {
         });
 
         req.documento = documento;
-
         return next();
       }
 
-
-      // =====================================================
-      // ABAC 3
-      // NIVEL DE SEGURIDAD
-      //
-      // user.nivel_seguridad >=
-      // document.nivel_confidencialidad
-      // =====================================================
-
-      if (
-        req.user.nivel_seguridad <
-        documento.nivel_confidencialidad
-      ) {
+      // ABAC 3 — nivel de seguridad
+      if (req.user.nivel_seguridad < documento.nivel_confidencialidad) {
 
         await registrarAuditoria({
           usuarioId: req.user.id,
@@ -206,18 +161,8 @@ function requireDocumentAccess(accion = 'consultar') {
         });
       }
 
-
-      // =====================================================
-      // ABAC 4
-      // DEPARTAMENTO
-      //
-      // user.departamento == document.departamento
-      // =====================================================
-
-      if (
-        req.user.departamento !==
-        documento.departamento
-      ) {
+      // ABAC 4 — departamento
+      if (req.user.departamento !== documento.departamento) {
 
         await registrarAuditoria({
           usuarioId: req.user.id,
@@ -237,18 +182,7 @@ function requireDocumentAccess(accion = 'consultar') {
         });
       }
 
-
-      // =====================================================
-      // ABAC 5
-      // PROPIEDAD DEL DOCUMENTO
-      //
-      // Empleado/Supervisor:
-      // solamente puede modificar documentos propios.
-      //
-      // Gerente/Administrador:
-      // pueden modificar documentos de otros usuarios.
-      // =====================================================
-
+      // ABAC 5 — propiedad del documento
       if (
         accion === 'modificar' &&
         req.user.rol_nombre !== 'Gerente' &&
@@ -276,38 +210,18 @@ function requireDocumentAccess(accion = 'consultar') {
         }
       }
 
-
-      // =====================================================
-      // ABAC 6
-      // HORARIO
-      //
-      // Documentos con confidencialidad 4 o 5:
-      // solamente de 08:00 a 18:00.
-      //
-      // IMPORTANTE:
-      // Se utiliza explícitamente America/Lima.
-      // Esto evita depender de la zona horaria
-      // del servidor/cloud.
-      // =====================================================
-
+      // ABAC 6 y 7 — horario y dispositivo
       if (documento.nivel_confidencialidad >= 4) {
 
-        const horaLima = new Intl.DateTimeFormat(
-          'es-PE',
-          {
-            timeZone: 'America/Lima',
-            hour: '2-digit',
-            hour12: false
-          }
-        ).format(new Date());
+        const horaLima = new Intl.DateTimeFormat('es-PE', {
+          timeZone: 'America/Lima',
+          hour: '2-digit',
+          hour12: false
+        }).format(new Date());
 
         const horaActual = parseInt(horaLima, 10);
 
-
-        if (
-          horaActual < 8 ||
-          horaActual >= 18
-        ) {
+        if (horaActual < 8 || horaActual >= 18) {
 
           await registrarAuditoria({
             usuarioId: req.user.id,
@@ -327,22 +241,8 @@ function requireDocumentAccess(accion = 'consultar') {
             zona_horaria: 'America/Lima'
           });
         }
-      }
 
-
-      // =====================================================
-      // ABAC 7
-      // DISPOSITIVO
-      //
-      // Documentos con confidencialidad 4 o 5:
-      // solamente desde dispositivo corporativo.
-      // =====================================================
-
-      if (documento.nivel_confidencialidad >= 4) {
-
-        const tipoDispositivo =
-          req.headers['x-device-type'];
-
+        const tipoDispositivo = req.headers['x-device-type'];
 
         if (tipoDispositivo !== 'corporate') {
 
@@ -360,24 +260,13 @@ function requireDocumentAccess(accion = 'consultar') {
             error: 'Acceso denegado',
             motivo: 'Los documentos de alta confidencialidad requieren un dispositivo corporativo',
             dispositivo_requerido: 'corporate',
-            dispositivo_actual:
-              tipoDispositivo || 'no identificado'
+            dispositivo_actual: tipoDispositivo || 'no identificado'
           });
         }
       }
 
-
-      // =====================================================
-      // ABAC 8
-      // PAÍS
-      //
-      // user.pais == document.pais
-      // =====================================================
-
-      if (
-        req.user.pais !==
-        documento.pais
-      ) {
+      // ABAC 8 — país
+      if (req.user.pais !== documento.pais) {
 
         await registrarAuditoria({
           usuarioId: req.user.id,
@@ -397,11 +286,7 @@ function requireDocumentAccess(accion = 'consultar') {
         });
       }
 
-
-      // =====================================================
-      // ACCESO AUTORIZADO
-      // =====================================================
-
+      // Acceso autorizado
       await registrarAuditoria({
         usuarioId: req.user.id,
         recurso,
@@ -412,13 +297,8 @@ function requireDocumentAccess(accion = 'consultar') {
         dispositivo: req.headers['user-agent']
       });
 
-
-      // Guardamos el documento para que la ruta
-      // pueda utilizarlo sin volver a consultarlo.
       req.documento = documento;
-
       next();
-
 
     } catch (error) {
 
@@ -435,6 +315,70 @@ function requireDocumentAccess(accion = 'consultar') {
 }
 
 
+// =====================================================
+// VERSIÓN "PURA" DE LAS POLÍTICAS ABAC
+// Reutiliza las mismas 8 reglas de arriba pero sin
+// consultar la BD ni auditar por documento individual.
+// Sirve para filtrar listados completos en memoria
+// (GET /documentos) sin generar un registro de
+// auditoría por cada fila.
+// =====================================================
+
+function usuarioPuedeAcceder(user, documento, opciones = {}) {
+
+  const { accion = 'consultar', deviceType } = opciones;
+
+  if (user.estado !== 'activo') {
+    return false;
+  }
+
+  if (user.rol_nombre === 'Invitado') {
+    if (user.tipo_contrato !== 'EXTERNO') return false;
+    if (documento.nivel_confidencialidad > 1) return false;
+    if (documento.estado !== 'PUBLICADO') return false;
+    return true;
+  }
+
+  if (user.nivel_seguridad < documento.nivel_confidencialidad) {
+    return false;
+  }
+
+  if (user.departamento !== documento.departamento) {
+    return false;
+  }
+
+  if (
+    accion === 'modificar' &&
+    user.rol_nombre !== 'Gerente' &&
+    user.rol_nombre !== 'Administrador' &&
+    user.id !== documento.propietario_id
+  ) {
+    return false;
+  }
+
+  if (documento.nivel_confidencialidad >= 4) {
+
+    const horaLima = new Intl.DateTimeFormat('es-PE', {
+      timeZone: 'America/Lima',
+      hour: '2-digit',
+      hour12: false
+    }).format(new Date());
+
+    const horaActual = parseInt(horaLima, 10);
+
+    if (horaActual < 8 || horaActual >= 18) return false;
+    if (deviceType !== 'corporate') return false;
+  }
+
+  if (user.pais !== documento.pais) {
+    return false;
+  }
+
+  return true;
+}
+
+
 module.exports = {
-  requireDocumentAccess
+  requireDocumentAccess,
+  usuarioPuedeAcceder
 };
